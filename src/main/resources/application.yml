@@ -1,0 +1,21 @@
+#如果想要以單機環境啟動多個“警察”服務的話，那麼這裡不需要配置端口號。
+#只需在PoliceServer中從控制台讀入端口號的形式啟動，同時注釋掉“server:   port: 8082”  即可
+server: 
+  port: 9000
+spring:
+  application:
+    name: spring-ribbon-invoker
+#下面這些東西對應MyClient類的註解中的內容。其格式為“客戶端名稱: 命名空間: 配置屬性: 值”
+#其中命名空間對應的是服務提供者工程的服務名稱。命名空間不知該填什麼，就用默認的ribbon吧。
+ribbon-lb-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.troila.lw.MyRule
+#若我們想要用我們自定義的負載均衡的規則覆蓋spring默認的負載均衡的規則，那麼可以按照下面的配置來使用
+#換言之，就是顯示的指定一下客戶端名稱為default的ribbon對應配置是誰即可。
+#default:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.troila.lw.MyRule
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
